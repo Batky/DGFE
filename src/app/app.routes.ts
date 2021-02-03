@@ -3,7 +3,7 @@ import { ErrorComponent } from './pages/error/error.component';
 import { AppGuard } from './app.guard';
 
 export const ROUTES: Routes = [{
-  path: '', redirectTo: 'login', pathMatch: 'full'
+  path: '', redirectTo: 'app', pathMatch: 'full'
 },
 {
   path: 'app', canActivate: [AppGuard], loadChildren: () => import('./layout/layout.module').then(module => module.LayoutModule)

@@ -41,61 +41,22 @@ export class LoginService {
   }
 
   isAuthenticated() {
-    // const token = localStorage.getItem('token');
-    // let data = null;
-    //
-    // // We check if app runs with backend mode
-    // if (!this.config.isBackend && token) return true;
-    // if (!token) return;
-    // const date = new Date().getTime() / 1000;
-    // try {
-    //   data = jwt.decodeToken(token);
-    // } catch(e) {
-    //   this.router.navigate(['/login']);
-    // }
-    // if (!data) return;
-    // return date < data.exp;
-    return true;
+    if (this.user === undefined || this.user === null) {
+      return false;
+    }
+    if (this.user.allowedItems === undefined || this.user.allowedItems === null) {
+      return false;
+    }
+    return this.user.allowedItems.root;
   }
 
-  loginUser(creds) {
-    // this.restService.getCurrentUser(creds.name, creds.password).subscribe(
-    //   (response) => {
-    //     console.log('response received');
-    //     // this.user = response;
-    //     console.log(response);
-    //   },
-    //     (error) => {
-    //     console.error('Request failed with error:');
-    //     console.error(error);
-    //     },
-    //     () => {
-    //       console.error('Request completed');
-    //     });
-    this.restService.getCurrentUser(creds.name, creds.password).then(data => {
+  loginUser(credentials) {
+    this.restService.getCurrentUser(credentials.name, credentials.password).then(data => {
       this.user = data;
       console.log(this.user);
+      this.router.navigate(['/app']);
     });
-    // We check if app runs with backend mode
-    // if (!this.config.isBackend) {
-    //   this.receiveToken('token');
-    // } else {
-    //   this.requestLogin();
-    //   if (creds.social) {
-    //     // tslint:disable-next-line
-    //     window.location.href = this.config.baseURLApi + '/user/signin/' + creds.social + (process.env.NODE_ENV === 'production' ? '?app=light-blue/angular' : '');
-    //   } else if (creds.email.length > 0 && creds.password.length > 0) {
-    //     this.http.post('/user/signin/local', creds).subscribe((res: any) => {
-    //       const token = res.token;
-    //       this.receiveToken(token);
-    //     }, err => {
-    //       this.loginError(err.response.data);
-    //     });
-    //
-    //   } else {
-    //     this.loginError('Something was wrong. Try again');
-    //   }
-    // }
+
   }
 
   receiveToken(token) {

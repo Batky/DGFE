@@ -1,9 +1,20 @@
+export interface MenuItems {
+  root: boolean;
+  localAdministrator: boolean;
+  userManagement: boolean;
+  rolesManagement: boolean;
+}
+
 export interface User {
+  id: number;
   name: string;
-  surname: string;
+  login: string;
+  middleName: string;
+  lastName: string;
   department: string;
-  mail: string;
-  userName: string;
-  authorities: string[];
-  appAllowed: boolean;
+  email: string;
+  validToDateTime: string;
+  allowedItems: MenuItems;
+  password: number;
+  accessCard: string;
 }
